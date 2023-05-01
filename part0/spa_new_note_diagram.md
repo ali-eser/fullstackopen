@@ -33,5 +33,5 @@ sequenceDiagram
     browser-->>server: new note
     deactivate server
 
-    Note right of the browser: The SPA JS will automatically fetch new notes after the POST request
+    Note right of browser: The SPA JS will automatically fetch new notes after the POST request
 ```
