@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant browser
     participant server
@@ -26,3 +27,4 @@ sequenceDiagram
     activate server
     server-->>browser: the favicon which is displayed on the browser tab as the webpage logo
     deactivate server
+```

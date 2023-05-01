@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant browser
     participant server
@@ -33,3 +34,4 @@ sequenceDiagram
     deactivate server
 
     Note right of the browser: The SPA JS will automatically fetch new notes after the POST request
+```
