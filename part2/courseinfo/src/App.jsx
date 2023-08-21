@@ -6,6 +6,10 @@ const Course = ({ course }) => {
         </div>
     )
 
+    const Total = ({ sum }) => (
+        <div><strong>total of {sum} exercises</strong></div>
+    )
+
     const Part = ({ part }) => (
         <div>{part.name} {part.exercises}</div>
     )
@@ -24,6 +28,8 @@ const Course = ({ course }) => {
         <div>
             <Header name={course.name}/>
             <Content course={course} />
+            <br/>
+            <Total sum={course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises} />
         </div>
     )
 }
