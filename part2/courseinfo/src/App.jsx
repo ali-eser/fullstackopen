@@ -22,7 +22,7 @@ const Course = ({ course }) => {
     const Content = ({ partList }) => {
         const items = []
         partList.parts.forEach((item, i) => {
-            items.push(<Part part={partList.parts[i]} /> )
+            items.push(<Part key={i} part={partList.parts[i]} /> )
         })
         return (
             <div>
