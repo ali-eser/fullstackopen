@@ -28,7 +28,7 @@ const App = () => {
   const index = []
   const mostVotes = Math.max(...points)
 
-  for(let i = 0; i < points.length; i++) {
+  for (let i = 0; i < points.length; i++) {
     if (points[i] === mostVotes) {
       index.push(i);
     }
