@@ -13,6 +13,7 @@ const App = () => {
     const [search, setSearch] = useState('');
     const [showAll, setShowAll] = useState(true);
     const [message, setMessage] = useState('');
+    const [isPositive, setIsPositive] = useState(true)
 
     useEffect(() => {
         personService
@@ -35,7 +36,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <Notification message={message} />
+            <Notification message={message} isPositive={isPositive} />
             <Filter
                 persons={persons}
                 setShowAll={setShowAll}
@@ -45,7 +46,7 @@ const App = () => {
             <PersonForm
                 persons={persons}
                 setMessage={setMessage}
-                message={message}
+                setIsPositive={setIsPositive}
                 handleNumberChange={handleNumberChange}
                 handleNameChange={handleNameChange}
                 setNewName={setNewName}
@@ -55,7 +56,13 @@ const App = () => {
                 newNumber={newNumber}
             />
             <h2>Numbers</h2>
-            <PeopleList persons={persons} showAll={showAll} setPersons={setPersons} setMessage={setMessage} />
+            <PeopleList 
+                persons={persons} 
+                showAll={showAll} 
+                setPersons={setPersons} 
+                setMessage={setMessage} 
+                setIsPositive={setIsPositive} 
+            />
         </div>
     )
 }

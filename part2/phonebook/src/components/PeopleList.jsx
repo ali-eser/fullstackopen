@@ -14,7 +14,15 @@ const PeopleList = (props) => {
                         .then(response => {
                             props.setPersons(response.data)
                         })
+                    props.setIsPositive(true)
                     props.setMessage(`${name} has been deleted from the phonebook.`)
+                    setTimeout(() => {
+                        props.setMessage(null)
+                    }, 5000)
+                })
+                .catch(() => {
+                    props.setIsPositive(false)
+                    props.setMessage(`Information of ${name} has already been deleted from the phonebook.`)
                     setTimeout(() => {
                         props.setMessage(null)
                     }, 5000)
