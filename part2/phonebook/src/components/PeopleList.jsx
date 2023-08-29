@@ -5,8 +5,20 @@ const PeopleList = (props) => {
     const showAll = props.showAll
 
     const removePerson = (name, id) => {
-        if (window.confirm(`Delete ${name}?`)) {
-            personService.remove(id)
+        if (confirm(`Delete ${name}?`)) {
+            personService
+                .remove(id)
+                .then(() => {
+                    personService
+                        .getAll()
+                        .then(response => {
+                            props.setPersons(response.data)
+                        })
+                    props.setMessage(`${name} has been deleted from the phonebook.`)
+                    setTimeout(() => {
+                        props.setMessage(null)
+                    }, 5000)
+                })
         }
     }
 
@@ -16,7 +28,7 @@ const PeopleList = (props) => {
     return (
         <ul>
             {personsToShow.map(person =>
-                <li key={person.id}>{person.name} {person.number} <button onClick={() => removePerson(person.name, person.id)}>delete</button></li>)}
+                <li className='person' key={person.id}>{person.name} {person.number}<button onClick={() => removePerson(person.name, person.id)}>delete</button></li>)}
         </ul>
     )
 }

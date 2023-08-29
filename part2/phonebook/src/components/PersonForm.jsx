@@ -18,12 +18,16 @@ const PersonForm = (props) => {
                 if (confirm(`${props.persons[i].name} is already added to the phonebook, replace the old number with the new one?`)) {
                     personService
                         .update(props.persons[i].id, personObject)
-                        .then(response => {
+                        .then(() => { 
                             personService
                                 .getAll()
                                 .then(response => {
                                     props.setPersons(response.data)
                                 })
+                            props.setMessage(`Updated the number of ${personObject.name}.`)
+                            setTimeout(() => {
+                                props.setMessage(null)
+                            }, 5000)
                         })
                 }
                 break
@@ -35,10 +39,15 @@ const PersonForm = (props) => {
                 .create(personObject)
                 .then(response => {
                     props.setPersons(props.persons.concat(response.data))
+                    props.setMessage(`${personObject.name} has been added to the phonebook.`)
+                    setTimeout(() => {
+                        props.setMessage(null)
+                    }, 5000)
                 })
         }
 
         props.setNewName('');
+        props.setNewNumber('');
     }
 
     return (
