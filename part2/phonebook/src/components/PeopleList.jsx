@@ -4,13 +4,19 @@ const PeopleList = (props) => {
     const persons = props.persons
     const showAll = props.showAll
 
+    const removePerson = (name, id) => {
+        if (window.confirm(`Delete ${name}?`)) {
+            personService.remove(id)
+        }
+    }
+
     const personsToShow = showAll
         ? persons
         : persons.filter(person => person.show === true)
     return (
         <ul>
             {personsToShow.map(person =>
-                <li key={person.id}>{person.name} {person.number} <button onClick={() => personService.remove(person.id)}>delete</button></li>)}
+                <li key={person.id}>{person.name} {person.number} <button onClick={() => removePerson(person.name, person.id)}>delete</button></li>)}
         </ul>
     )
 }
