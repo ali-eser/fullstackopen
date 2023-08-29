@@ -1,3 +1,5 @@
+import personService from '../services/persons'
+
 const PeopleList = (props) => {
     const persons = props.persons
     const showAll = props.showAll
@@ -8,7 +10,7 @@ const PeopleList = (props) => {
     return (
         <ul>
             {personsToShow.map(person =>
-                <li key={person.id}>{person.name} {person.number}</li>)}
+                <li key={person.id}>{person.name} {person.number} <button onClick={() => personService.remove(person.id)}>delete</button></li>)}
         </ul>
     )
 }
