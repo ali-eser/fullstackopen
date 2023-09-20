@@ -15,13 +15,15 @@ const totalLikes = (blogs) => {
 }
 
 const favoriteBlog = (blogs) => {
+  let index = 0
   let max = 0
   for (let i = 0; i < blogs.length; i++) {
     if (blogs[i].likes >= max) {
       max = blogs[i].likes
+      index = i
     }
   }
-  return max
+  return blogs[index]
 }
 
 module.exports = {
