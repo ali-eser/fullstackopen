@@ -109,6 +109,22 @@ describe('blogs', () => {
     }
   })
   
+  test('blog posts with no likes property default to 0 likes', async () => {
+    const newBlog = {
+      title: 'CS50 AI',
+      author: 'Harvard University',
+      url: 'https://cs50.harvard.edu/ai/2023/'
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+
+    const blogs = await helper.blogsInDb()
+    expect(blogs[blogs.length - 1].likes).toEqual(0)
+  })
+
   afterAll(async () => {
     await mongoose.connection.close()
   }, 100000)
