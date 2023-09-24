@@ -101,6 +101,13 @@ describe('blogs', () => {
     const blogs = blogsAtEnd.map(r => r.title)
     expect(blogs).not.toContain(blogToDelete.title)
   })
+
+  test('blog posts have properties named id', async () => {
+    const blogs = await helper.blogsInDb()
+    for (let i = 0; i < blogs.length; i++) {
+      expect(blogs[i].id).toBeDefined()
+    }
+  })
   
   afterAll(async () => {
     await mongoose.connection.close()
