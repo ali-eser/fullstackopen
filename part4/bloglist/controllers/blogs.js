@@ -12,7 +12,7 @@ blogsRouter.get('/:id', async (request, response) => {
   if (blog) {
     response.json(blog)
   } else {
-    response.status(404).send('Person with given id not found')
+    response.status(404).send('Blog post with given id not found')
   }
 })
 
@@ -37,6 +37,12 @@ blogsRouter.post('/', async (request, response) => {
 
 blogsRouter.delete('/:id', async (request, response) => {
   await Blog.findByIdAndRemove(request.params.id)
+  response.status(204).end()
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  console.log(request.body)
+  await Blog.findByIdAndUpdate(request.params.id, { likes: request.body.likes })
   response.status(204).end()
 })
 

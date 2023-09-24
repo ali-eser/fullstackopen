@@ -137,6 +137,18 @@ describe('blogs', () => {
       .expect(400)
   })
 
+  test('blog posts get successfully updated', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    
+    await api
+      .put(`/api/blogs/${blogsAtStart[0].id}`)
+      .send({ likes: 51 })
+      .expect(204)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd[0].likes).toEqual(51)
+  })
+
   afterAll(async () => {
     await mongoose.connection.close()
   }, 100000)
