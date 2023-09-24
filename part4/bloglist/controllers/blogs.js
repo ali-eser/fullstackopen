@@ -18,7 +18,7 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
-  if (!Object.hasOwn(body, 'title')) {
+  if (!Object.hasOwn(body, 'title') || !Object.hasOwn(body, 'url')) {
     response.status(400).send()
   } else {
     if (!Object.hasOwn(body, 'likes')) {

@@ -125,6 +125,18 @@ describe('blogs', () => {
     expect(blogs[blogs.length - 1].likes).toEqual(0)
   })
 
+  test('blog posts with no title or url properties are declined', async () => {
+    const newBlog = {
+      author: 'Harvard University',
+      likes: 50
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+  })
+
   afterAll(async () => {
     await mongoose.connection.close()
   }, 100000)
