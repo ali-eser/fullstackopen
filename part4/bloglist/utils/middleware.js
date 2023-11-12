@@ -10,12 +10,10 @@ const requestLogger = (request, response, next) => {
 
 const tokenExtractor = (request, response, next) => {
   const authorization = request.get('authorization')
-  logger.info('request.token: ', request.token)
   if (authorization && authorization.startsWith('Bearer ')) {
     request.token = authorization.replace('Bearer ', '')
-    logger.info('request.token: ', request.token)
-    next()
   }
+  next()
 }
 
 const unknownEndpoint = (request, response) => {
