@@ -9,13 +9,15 @@ usersRouter.get('/list', async (request, response) => {
 
 usersRouter.post('/', async (request, response) => {
   const {username, name, password} = request.body
+
+  const isUser = await User.findOne({ username: username })
   
   if (!(username && password)) {
-    response.status(401).send('Username or password is missing')
-  } else if (User.find({ username : username })) {
-    response.status(401).send('Username already taken')
+    return response.status(401).send('Username or password is missing')
+  } else if (isUser) {
+    return response.status(401).send('Username already taken')
   } else if (username.length < 3 || password.length < 3) {
-    response.status(401).send('Username and password must at least be 3 characters long')
+    return response.status(401).send('Username and password must at least be 3 characters long')
   } else {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
