@@ -7,4 +7,8 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const addBlog = async () => {
+  const request = await axios.post(baseUrl, )
+}
+
 export default { getAll }
