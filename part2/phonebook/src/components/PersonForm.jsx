@@ -52,6 +52,10 @@ const PersonForm = (props) => {
                         props.setMessage(null)
                     }, 5000)
                 })
+                .catch(error => {
+                    props.setMessage(`${error.response.data.error}`)
+                    console.log(error)
+                })
         }
 
         props.setNewName('');

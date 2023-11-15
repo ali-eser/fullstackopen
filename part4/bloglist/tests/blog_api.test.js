@@ -139,7 +139,7 @@ describe('blogs', () => {
 
   test('blog posts get successfully updated', async () => {
     const blogsAtStart = await helper.blogsInDb()
-    
+
     await api
       .put(`/api/blogs/${blogsAtStart[0].id}`)
       .send({ likes: 51 })
