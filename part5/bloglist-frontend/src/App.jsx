@@ -11,6 +11,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setURL] = useState('')
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -89,9 +90,17 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      setNotification(`${user.username} logged in successfully!`)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
       console.log(user.username, 'logged in')
     } catch (exception) {
       console.log('Invalid credentials')
+      setNotification('wrong username or password!')
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     }
   }
 
@@ -99,6 +108,10 @@ const App = () => {
     event.preventDefault()
     window.localStorage.clear()
     setUser(null)
+    setNotification(`${user.username} logged out successfully!`)
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000);
   }
 
   const handlePost = async (event) => {
@@ -109,6 +122,10 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setURL('')
+      setNotification(`${blog.title} by ${blog.author} successfully added!`)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
       console.log(blog.title, 'by', blog.author, 'successfully added')
     } catch (exception) {
       console.log(exception)
@@ -118,6 +135,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      {notification}
       {!user && loginForm()}
       {user && <div>
           <p>{user.name} logged in</p>
