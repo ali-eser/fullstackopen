@@ -66,7 +66,7 @@ const App = () => {
 
   const handlePost = async event => {
     event.preventDefault()
-    
+
     const newBlog = {
       title: event.target.Title.value,
       author: event.target.Author.value,
@@ -76,7 +76,7 @@ const App = () => {
     try {
       const blog = await blogService.addBlog(newBlog)
       setBlogs(blogs.concat(blog))
-      setNotification(`${blog.title} by ${blog.author} successfully added!`)
+      setNotification(`${blog.title} by ${blog.author} ${blog.id} successfully added!`)
       setTimeout(() => {
         setNotification(null)
       }, 5000)
