@@ -17,7 +17,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )
-  }, [])
+  }, [blogs])
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedInUser')
@@ -64,9 +64,9 @@ const App = () => {
     }, 5000);
   }
 
-  const handlePost = async (item) => {
+  const handlePost = async newBlog => {
     try {
-      const blog = await blogService.addBlog(item)
+      const blog = await blogService.addBlog(newBlog)
       blogService.getOne(blog.id).then(blog =>
         setBlogs(blogs.concat(blog))
       )
@@ -75,6 +75,15 @@ const App = () => {
         setNotification(null)
       }, 5000)
       console.log(blog.title, 'by', blog.author, 'successfully added')
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
+  const handleLikes = async item => {
+    try {
+      item.likes = item.likes + 1
+      const blog = await blogService.updateLikes(item)
     } catch (exception) {
       console.log(exception)
     }
@@ -106,7 +115,7 @@ const App = () => {
       }
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLikes={handleLikes} />
       )}
     </div>
   )
