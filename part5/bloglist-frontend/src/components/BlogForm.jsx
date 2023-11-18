@@ -5,10 +5,25 @@ const BlogForm = (props) => {
   const [author, setAuthor] = useState('')
   const [url, setURL] = useState('')
 
+  const addBlog = (event) => {
+    event.preventDefault()
+  
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url
+    }
+    props.handlePost(newBlog)
+    
+    setTitle('')
+    setAuthor('')
+    setURL('')
+  }
+
   return (
     <div>
       <h2>add new blog</h2>
-      <form onSubmit={props.onSubmit}>
+      <form onSubmit={addBlog}>
         <div>
           title:<input 
           type="text"

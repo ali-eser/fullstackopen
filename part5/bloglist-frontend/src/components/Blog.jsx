@@ -29,6 +29,7 @@ const Blog = ({ blog }) => {
   return (
     <div style={blogStyle}>
       {blog.title} by {blog.author} <button onClick={showDetails}>{buttonLabel}</button>
+      <br />
       <div style={blogDetailStyle}>
         <a href={blog.url}>{blog.url}</a>
         <br />

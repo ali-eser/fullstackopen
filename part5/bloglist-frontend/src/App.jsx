@@ -16,7 +16,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -64,19 +64,13 @@ const App = () => {
     }, 5000);
   }
 
-  const handlePost = async event => {
-    event.preventDefault()
-
-    const newBlog = {
-      title: event.target.Title.value,
-      author: event.target.Author.value,
-      url: event.target.URL.value
-    }
-
+  const handlePost = async (item) => {
     try {
-      const blog = await blogService.addBlog(newBlog)
-      setBlogs(blogs.concat(blog))
-      setNotification(`${blog.title} by ${blog.author} ${blog.id} successfully added!`)
+      const blog = await blogService.addBlog(item)
+      blogService.getOne(blog.id).then(blog =>
+        setBlogs(blogs.concat(blog))
+      )
+      setNotification(`${blog.title} by ${blog.author} successfully added!`)
       setTimeout(() => {
         setNotification(null)
       }, 5000)
@@ -104,8 +98,9 @@ const App = () => {
       {user && <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>logout</button>
+          <br />
           <Toggleable buttonLabel={'add new blog'}>
-            <BlogForm onSubmit={handlePost} />
+            <BlogForm handlePost={handlePost} />
           </Toggleable>
         </div>
       }
