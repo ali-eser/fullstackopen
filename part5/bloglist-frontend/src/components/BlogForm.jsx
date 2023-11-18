@@ -7,14 +7,14 @@ const BlogForm = (props) => {
 
   const addBlog = (event) => {
     event.preventDefault()
-  
+
     const newBlog = {
       title: title,
       author: author,
       url: url
     }
     props.handlePost(newBlog)
-    
+
     setTitle('')
     setAuthor('')
     setURL('')
@@ -25,25 +25,25 @@ const BlogForm = (props) => {
       <h2>add new blog</h2>
       <form onSubmit={addBlog}>
         <div>
-          title:<input 
-          type="text"
-          value={title}
-          name="Title"
-          onChange={event => setTitle(event.target.value)}/>
+          title:<input
+            type="text"
+            value={title}
+            name="Title"
+            onChange={event => setTitle(event.target.value)}/>
         </div>
         <div>
-          author:<input 
-          type="text"
-          value={author}
-          name="Author"
-          onChange={event => setAuthor(event.target.value)}/>
+          author:<input
+            type="text"
+            value={author}
+            name="Author"
+            onChange={event => setAuthor(event.target.value)}/>
         </div>
         <div>
-          url:<input 
-          type="text"
-          value={url}
-          name="URL"
-          onChange={event => setURL(event.target.value)}/>
+          url:<input
+            type="text"
+            value={url}
+            name="URL"
+            onChange={event => setURL(event.target.value)}/>
         </div>
         <br />
         <button type="submit">post blog</button>

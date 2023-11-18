@@ -32,7 +32,7 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       window.localStorage.setItem(
         'loggedInUser', JSON.stringify(user)
       )
@@ -61,7 +61,7 @@ const App = () => {
     setNotification(`${user.username} logged out successfully!`)
     setTimeout(() => {
       setNotification(null)
-    }, 5000);
+    }, 5000)
   }
 
   const handlePost = async newBlog => {
@@ -107,30 +107,30 @@ const App = () => {
       {notification}
 
       {!user && <Toggleable buttonLabel={'Login'}>
-        <LoginForm 
+        <LoginForm
           username={username}
           password={password}
           handleUsernameChange={({ target }) => setUsername(target.value)}
           handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin} 
+          handleSubmit={handleLogin}
         />
       </Toggleable> }
 
       {user && <div>
-          <p>{user.name} logged in</p>
-          <button onClick={handleLogout}>logout</button>
-          <br />
-          <Toggleable buttonLabel={'add new blog'}>
-            <BlogForm handlePost={handlePost} />
-          </Toggleable>
-        </div>
+        <p>{user.name} logged in</p>
+        <button onClick={handleLogout}>logout</button>
+        <br />
+        <Toggleable buttonLabel={'add new blog'}>
+          <BlogForm handlePost={handlePost} />
+        </Toggleable>
+      </div>
       }
 
       {blogs.map(blog =>
-        <Blog key={blog.id} 
-          blog={blog} 
-          handleLikes={handleLikes} 
-          handleDelete={handleDelete} 
+        <Blog key={blog.id}
+          blog={blog}
+          handleLikes={handleLikes}
+          handleDelete={handleDelete}
         />
       )}
     </div>
