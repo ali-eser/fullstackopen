@@ -33,9 +33,7 @@ const Blog = ({ blog, handleLikes, handleDelete }) => {
 
   const removeBlog = (event) => {
     event.preventDefault()
-    if (window.confirm('Are you sure you want to remove?')) {
-      handleDelete(blog.id)
-    }
+    handleDelete(blog)
   }
 
   return (

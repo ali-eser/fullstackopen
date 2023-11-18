@@ -89,11 +89,15 @@ const App = () => {
     }
   }
 
-  const handleDelete = async id => {
-    try {
-      const blog = await blogService.removeBlog(id)
-    } catch (exception) {
-      console.log(exception)
+  const handleDelete = async blog => {
+    if (user.username === blog.user.username) {
+      if (window.confirm(`Remove blog "${blog.title} by ${blog.author}"?`)) {
+        try {
+          await blogService.removeBlog(blog.id)
+        } catch (exception) {
+          console.log(exception)
+        }
+      }
     }
   }
 
