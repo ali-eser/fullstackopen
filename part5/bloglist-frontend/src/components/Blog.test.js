@@ -17,9 +17,10 @@ test('renders blog component', async () => {
   const mockHandler = jest.fn()
   const user = userEvent.setup()
 
-  const { container } = render(<Blog blog={blog} />)
+  const { container } = render(<Blog blog={blog} handleLikes={mockHandler} />)
 
   const viewButton = container.querySelector('#view-button')
+  const likeButton = container.querySelector('#like-button')
 
   const title = screen.getByText('example blog by University of Helsinki')
   const hidden = container.querySelector('#hidden')
@@ -30,4 +31,8 @@ test('renders blog component', async () => {
   await user.click(viewButton)
 
   expect(hidden).toHaveStyle('display: block')
+
+  await user.click(likeButton)
+  await user.click(likeButton)
+  expect(mockHandler.mock.calls).toHaveLength(2)
 })
