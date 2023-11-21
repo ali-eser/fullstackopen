@@ -8,12 +8,11 @@ const BlogForm = (props) => {
   const addBlog = (event) => {
     event.preventDefault()
 
-    const newBlog = {
+    props.handlePost({
       title: title,
       author: author,
       url: url
-    }
-    props.handlePost(newBlog)
+    })
 
     setTitle('')
     setAuthor('')

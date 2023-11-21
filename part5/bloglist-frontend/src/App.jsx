@@ -17,7 +17,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs.sort((a, b) => (b.likes - a.likes)) )
     )
-  }, [blogs])
+  }, [])
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedInUser')
@@ -84,6 +84,9 @@ const App = () => {
     try {
       item.likes = item.likes + 1
       const blog = await blogService.updateLikes(item)
+      blogService.getAll().then(blogs =>
+        setBlogs( blogs.sort((a, b) => (b.likes - a.likes)) )
+      )
     } catch (exception) {
       console.log(exception)
     }
