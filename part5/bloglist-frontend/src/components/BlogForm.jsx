@@ -28,6 +28,7 @@ const BlogForm = (props) => {
             type="text"
             value={title}
             name="Title"
+            id="title"
             onChange={event => setTitle(event.target.value)}/>
         </div>
         <div>
@@ -35,6 +36,7 @@ const BlogForm = (props) => {
             type="text"
             value={author}
             name="Author"
+            id="author"
             onChange={event => setAuthor(event.target.value)}/>
         </div>
         <div>
@@ -42,10 +44,11 @@ const BlogForm = (props) => {
             type="text"
             value={url}
             name="URL"
+            id="url"
             onChange={event => setURL(event.target.value)}/>
         </div>
         <br />
-        <button type="submit">post blog</button>
+        <button id="submit" type="submit">post blog</button>
       </form>
     </div>
   )

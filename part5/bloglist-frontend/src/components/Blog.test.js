@@ -2,6 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Blog from './Blog'
+import BlogForm from './BlogForm'
 import userEvent from '@testing-library/user-event'
 
 test('renders blog component', async () => {
@@ -35,4 +36,22 @@ test('renders blog component', async () => {
   await user.click(likeButton)
   await user.click(likeButton)
   expect(mockHandler.mock.calls).toHaveLength(2)
+})
+
+test('creates new blog', async () => {
+  const createBlog = jest.fn()
+
+  const { container } = render(<BlogForm handlePost={createBlog} />)
+
+  const submitButton = container.querySelector('#submit')
+
+  await userEvent.type(container.querySelector('#title'), 'full stack open')
+  await userEvent.type(container.querySelector('#author'), 'university of helsinki')
+  await userEvent.type(container.querySelector('#url'), 'fullstackopen.com')
+  await userEvent.click(submitButton)
+
+  expect(createBlog.mock.calls).toHaveLength(1)
+  expect(createBlog.mock.calls[0][0].title).toBe('full stack open')
+  expect(createBlog.mock.calls[0][0].author).toBe('university of helsinki')
+  expect(createBlog.mock.calls[0][0].url).toBe('fullstackopen.com')
 })
