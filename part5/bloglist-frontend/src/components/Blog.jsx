@@ -39,7 +39,7 @@ const Blog = ({ blog, handleLikes, handleDelete }) => {
 
   return (
     <div style={blogStyle} className='blog'>
-      {blog.title} by {blog.author} <button onClick={showDetails}>{buttonLabel}</button>
+      {blog.title} by {blog.author} <button id='view-button' onClick={showDetails}>{buttonLabel}</button>
       <br />
       <div id='hidden' style={blogDetailStyle}>
         <a href={blog.url}>{blog.url}</a>
