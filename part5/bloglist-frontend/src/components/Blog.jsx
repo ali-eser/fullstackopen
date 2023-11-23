@@ -24,8 +24,10 @@ const Blog = ({ blog, handleLikes, handleDelete, user }) => {
   }
 
   useEffect(() => {
-    if (user.username === blog.user.username) {
-      setShowRemove('block')
+    if (user) {
+      if (user.username === blog.user.username) {
+        setShowRemove('block')
+      }
     }
   }, [])
   
