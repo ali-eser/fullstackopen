@@ -124,7 +124,7 @@ const App = () => {
 
       {user && <div>
         <p>{user.name} logged in</p>
-        <button onClick={handleLogout}>logout</button>
+        <button id='logout-button' onClick={handleLogout}>logout</button>
         <br />
         <Toggleable buttonLabel={'add new blog'}>
           <BlogForm handlePost={handlePost} />
@@ -137,6 +137,7 @@ const App = () => {
           blog={blog}
           handleLikes={handleLikes}
           handleDelete={handleDelete}
+          user={user}
         />
       )}
     </div>

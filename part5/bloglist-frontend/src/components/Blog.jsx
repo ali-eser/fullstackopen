@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, handleLikes, handleDelete }) => {
+const Blog = ({ blog, handleLikes, handleDelete, user }) => {
   const [visibility, setVisibility] = useState('none')
+  const [showRemove, setShowRemove] = useState('none')
   const [buttonLabel, setLabel] = useState('view')
 
   const blogStyle = {
@@ -16,6 +18,17 @@ const Blog = ({ blog, handleLikes, handleDelete }) => {
   const blogDetailStyle = {
     display: visibility
   }
+
+  const removeVisibility = {
+    display: showRemove
+  }
+
+  useEffect(() => {
+    if (user.username === blog.user.username) {
+      setShowRemove('block')
+    }
+  }, [])
+  
 
   const showDetails = () => {
     if (visibility === 'none') {
@@ -48,7 +61,7 @@ const Blog = ({ blog, handleLikes, handleDelete }) => {
         <br />
         {blog.user.name}
         <br />
-        <button id='remove-blog-button' onClick={removeBlog}>remove blog</button>
+        <button style={removeVisibility} id='remove-blog-button' onClick={removeBlog}>remove blog</button>
       </div>
     </div>
   )
