@@ -78,7 +78,7 @@ blogsRouter.delete('/:id', async (request, response) => {
 
 blogsRouter.delete('/', async (request, response) => {
   await Blog.deleteMany({})
-  return response.status(204).send('complete')
+  return response.status(204).end()
 })
 
 blogsRouter.put('/:id', async (request, response) => {

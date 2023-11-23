@@ -34,4 +34,9 @@ usersRouter.post('/', async (request, response) => {
   }
 })
 
+usersRouter.delete('/reset', async (request , response) => {
+  await User.deleteMany({})
+  return response.status(201).end()
+})
+
 module.exports = usersRouter
