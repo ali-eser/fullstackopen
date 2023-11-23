@@ -41,7 +41,7 @@ describe('Blog app', function() {
       cy.login({ username: 'fso', password: 'fullstackopen' })
     })
   
-    it('a new blog can be created', function() {
+    it('a new blog can be created and be liked', function() {
       cy.get('#add-blog-show').click()
       cy.get('#title').type('Full Stack Open')
       cy.get('#author').type('Matti Luukkainen')
@@ -49,6 +49,11 @@ describe('Blog app', function() {
       cy.get('#submit').click()
 
       cy.contains('Full Stack Open by Matti Luukkainen')
+
+      cy.get('#view-button').click()
+      cy.get('#like-button').click()
+
+      cy.contains('likes: 1')
     })
   })
 })
