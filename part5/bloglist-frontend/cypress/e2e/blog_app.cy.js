@@ -90,5 +90,23 @@ describe('Blog app', function() {
       cy.login({ username: 'cs50', password: 'harvard' })
       cy.contains('#remove-blog-button').should('not.exist')
     })
+
+    it('blogs are ordered according to likes', function() {
+      cy.get('#add-blog-show').click()
+      cy.get('#title').type('Second blog with most likes')
+      cy.get('#author').type('Matti Luukkainen')
+      cy.get('#url').type('fullstackopen.com')
+      cy.get('#submit').click()
+
+      cy.get('#title').type('The blog with the most likes')
+      cy.get('#author').type('Matti Luukkainen')
+      cy.get('#url').type('fullstackopen.com')
+      cy.get('#submit').click()
+
+      cy.get('.blog').eq(1).contains('view').click()
+      cy.get('.blog').eq(1).contains('like').click()
+      
+      cy.get('.blog').eq(0).contains('The blog with the most likes')
+    })
   })
 })
