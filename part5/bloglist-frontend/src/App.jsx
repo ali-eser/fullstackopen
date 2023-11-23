@@ -107,7 +107,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      {notification}
+      <div class='notification'>{notification}</div>
 
       {!user && <Toggleable buttonLabel={'Login'}>
         <LoginForm
