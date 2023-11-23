@@ -97,6 +97,9 @@ const App = () => {
       if (window.confirm(`Remove blog "${blog.title} by ${blog.author}"?`)) {
         try {
           await blogService.removeBlog(blog.id)
+          blogService.getAll().then(blogs =>
+            setBlogs( blogs.sort((a, b) => (b.likes - a.likes)) )
+          )
         } catch (exception) {
           console.log(exception)
         }

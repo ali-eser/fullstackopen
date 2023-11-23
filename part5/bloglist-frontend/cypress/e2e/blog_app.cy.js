@@ -48,12 +48,27 @@ describe('Blog app', function() {
       cy.get('#url').type('fullstackopen.com')
       cy.get('#submit').click()
 
-      cy.contains('Full Stack Open by Matti Luukkainen')
+      cy.contains('likes:')
 
       cy.get('#view-button').click()
       cy.get('#like-button').click()
 
       cy.contains('likes: 1')
+    })
+
+    it('the user can delete their blog', function() {
+      cy.get('#add-blog-show').click()
+      cy.get('#title').type('Full Stack Open')
+      cy.get('#author').type('Matti Luukkainen')
+      cy.get('#url').type('fullstackopen.com')
+      cy.get('#submit').click()
+
+      cy.contains('likes:')
+
+      cy.get('#view-button').click()
+      cy.get('#remove-blog-button').click()
+
+      cy.contains('likes:').should('not.exist')
     })
   })
 })
