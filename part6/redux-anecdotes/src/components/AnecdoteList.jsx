@@ -3,19 +3,20 @@ import { voteAnecdote } from '../reducers/anecdoteReducer'
 import Filter from './Filter'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => {
-    if (state.filter === '') {
-      return state.anecdotes.sort((a, b) => (b.votes - a.votes))
+  const dispatch = useDispatch()
+  
+  const anecdotes = useSelector(({ filter, anecdotes })=> {
+    console.log(filter)
+    if (filter === '') {
+      return anecdotes.sort((a, b) => (b.votes - a.votes))
     } else {
-      return state.anecdotes.filter(anecdote => {
-        if (anecdote.content.toLowerCase().includes(state.filter.toLowerCase())) {
+      return anecdotes.filter(anecdote => {
+        if (anecdote.content.toLowerCase().includes(filter.toLowerCase())) {
           return anecdote
         }
       })
     }
   })
-
-  const dispatch = useDispatch()
 
   const vote = (id) => {
     console.log('vote', id)
