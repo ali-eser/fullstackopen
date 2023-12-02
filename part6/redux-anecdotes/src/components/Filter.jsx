@@ -3,13 +3,7 @@ import { filterAnecdote } from '../reducers/filterReducer'
 
 const Filter = () => {
   const dispatch = useDispatch()
-
-  const handleChange = (event) => {
-    event.preventDefault()
-    console.log(event.target.value)
-    dispatch(filterAnecdote(event.target.value))
-  }
-
+  
   const style = {
     marginBottom: 15
   }
@@ -17,7 +11,7 @@ const Filter = () => {
   return (
     <div style={style}>
       filter
-      <input type="text" name="filter" onChange={handleChange} />
+      <input type="text" name="filter" onChange={(evt) => dispatch(filterAnecdote(evt.target.value))} />
     </div>
   )
 }

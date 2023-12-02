@@ -6,7 +6,8 @@ const AnecdoteList = () => {
   const dispatch = useDispatch()
   
   const anecdotes = useSelector(({ filter, anecdotes })=> {
-    console.log(filter)
+    console.log(anecdotes)
+    anecdotes = [...anecdotes]
     if (filter === '') {
       return anecdotes.sort((a, b) => (b.votes - a.votes))
     } else {
@@ -17,11 +18,6 @@ const AnecdoteList = () => {
       })
     }
   })
-
-  const vote = (id) => {
-    console.log('vote', id)
-    dispatch(voteAnecdote(id))
-  }
 
   return (
     <div>
@@ -34,7 +30,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => dispatch(voteAnecdote(anecdote.id))}>vote</button>
           </div>
         </div>
       )}
