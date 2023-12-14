@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { defineNotification } from "./reducers/notificationReducer";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -11,7 +13,9 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [notification, setNotification] = useState(null);
+  const dispatch = useDispatch();
+
+  const notification = useSelector(({notification}) => notification)
 
   useEffect(() => {
     blogService
@@ -38,17 +42,11 @@ const App = () => {
       setUser(user);
       setUsername("");
       setPassword("");
-      setNotification(`${user.username} logged in successfully!`);
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      dispatch(defineNotification(`${user.username} logged in successfully!`, 5))
       console.log(user.username, "logged in");
     } catch (exception) {
       console.log("Invalid credentials");
-      setNotification("wrong username or password!");
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      dispatch(defineNotification('wrong username or password', 5))
     }
   };
 
@@ -56,20 +54,14 @@ const App = () => {
     event.preventDefault();
     window.localStorage.clear();
     setUser(null);
-    setNotification(`${user.username} logged out successfully!`);
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
+    dispatch(defineNotification(`${user.username} logged out successfully!`, 5));
   };
 
   const handlePost = async (newBlog) => {
     try {
       const blog = await blogService.addBlog(newBlog);
       blogService.getOne(blog.id).then((blog) => setBlogs(blogs.concat(blog)));
-      setNotification(`${blog.title} by ${blog.author} successfully added!`);
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      dispatch(defineNotification(`${blog.title} by ${blog.author} successfully added!`, 5));
       console.log(blog.title, "by", blog.author, "successfully added");
     } catch (exception) {
       console.log(exception);
