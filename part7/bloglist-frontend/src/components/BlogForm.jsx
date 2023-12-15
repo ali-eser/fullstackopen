@@ -1,22 +1,25 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createBlog } from "../reducers/blogReducer";
+import { defineNotification } from "../reducers/notificationReducer";
 
 const BlogForm = (props) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setURL] = useState("");
+  const dispatch = useDispatch()
 
   const addBlog = (event) => {
     event.preventDefault();
 
-    props.handlePost({
-      title: title,
-      author: author,
-      url: url,
-    });
+    const newBlog = {
+      title: event.target.title.value,
+      author: event.target.author.value,
+      url: event.target.url.value,
+    };
 
-    setTitle("");
-    setAuthor("");
-    setURL("");
+    dispatch(createBlog(newBlog))
+    dispatch(defineNotification(`you added ${newBlog.title} by ${newBlog.author}`, 5))
+
+    event.target.title.value = '';
+    event.target.author.value = '';
+    event.target.url.value = '';
   };
 
   return (
@@ -27,30 +30,24 @@ const BlogForm = (props) => {
           title:
           <input
             type="text"
-            value={title}
             name="Title"
             id="title"
-            onChange={(event) => setTitle(event.target.value)}
           />
         </div>
         <div>
           author:
           <input
             type="text"
-            value={author}
             name="Author"
             id="author"
-            onChange={(event) => setAuthor(event.target.value)}
           />
         </div>
         <div>
           url:
           <input
             type="text"
-            value={url}
             name="URL"
             id="url"
-            onChange={(event) => setURL(event.target.value)}
           />
         </div>
         <br />

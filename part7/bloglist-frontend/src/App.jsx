@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { defineNotification } from "./reducers/notificationReducer";
+import { initializeBlogs, like, remove } from "./reducers/blogReducer";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -9,19 +10,21 @@ import Toggleable from "./components/Toggleable";
 import BlogForm from "./components/BlogForm";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const dispatch = useDispatch();
 
-  const notification = useSelector(({notification}) => notification)
+  const notification = useSelector(({ notification }) => notification)
 
   useEffect(() => {
-    blogService
-      .getAll()
-      .then((blogs) => setBlogs(blogs.sort((a, b) => b.likes - a.likes)));
-  }, []);
+    dispatch(initializeBlogs())
+  }, [])
+
+  const blogs = useSelector(({ blogs }) => {
+    blogs = [...blogs]
+    return blogs.sort((a,b) => (b.likes - a.likes))
+  })
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("loggedInUser");
@@ -57,24 +60,11 @@ const App = () => {
     dispatch(defineNotification(`${user.username} logged out successfully!`, 5));
   };
 
-  const handlePost = async (newBlog) => {
+  const handleLikes = async blog => {
     try {
-      const blog = await blogService.addBlog(newBlog);
-      blogService.getOne(blog.id).then((blog) => setBlogs(blogs.concat(blog)));
-      dispatch(defineNotification(`${blog.title} by ${blog.author} successfully added!`, 5));
-      console.log(blog.title, "by", blog.author, "successfully added");
-    } catch (exception) {
-      console.log(exception);
-    }
-  };
-
-  const handleLikes = async (item) => {
-    try {
-      item.likes = item.likes + 1;
-      const blog = await blogService.updateLikes(item);
-      blogService
-        .getAll()
-        .then((blogs) => setBlogs(blogs.sort((a, b) => b.likes - a.likes)));
+      blog = {...blog}
+      blog.likes = blog.likes + 1
+      dispatch(like(blog))
     } catch (exception) {
       console.log(exception);
     }
@@ -84,10 +74,7 @@ const App = () => {
     if (user.username === blog.user.username) {
       if (window.confirm(`Remove blog "${blog.title} by ${blog.author}"?`)) {
         try {
-          await blogService.removeBlog(blog.id);
-          blogService
-            .getAll()
-            .then((blogs) => setBlogs(blogs.sort((a, b) => b.likes - a.likes)));
+          dispatch(remove(blog))
         } catch (exception) {
           console.log(exception);
         }
@@ -120,7 +107,7 @@ const App = () => {
           </button>
           <br />
           <Toggleable buttonLabel={"add new blog"}>
-            <BlogForm handlePost={handlePost} />
+            <BlogForm />
           </Toggleable>
         </div>
       )}
