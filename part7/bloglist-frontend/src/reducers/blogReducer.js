@@ -26,8 +26,9 @@ const blogSlice = createSlice({
       const id = action.payload
       const blogToDelete = copyState.find(blog => blog.id === id)
       const index = copyState.indexOf(blogToDelete)
-      if (index > -1)
-      copyState.splice(index, 1)
+      if (index > -1) {
+        copyState.splice(index, 1)
+      }
       return copyState
     }
   }
