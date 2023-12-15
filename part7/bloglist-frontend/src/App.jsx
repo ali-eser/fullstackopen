@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { defineNotification } from "./reducers/notificationReducer";
 import { initializeBlogs, like, remove } from "./reducers/blogReducer";
+import { initUser } from "./reducers/userReducer";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -13,9 +14,10 @@ const App = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
 
   const notification = useSelector(({ notification }) => notification)
+  const user = useSelector(({ user }) => user)
+  console.log(user)
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -30,7 +32,7 @@ const App = () => {
     const loggedUser = window.localStorage.getItem("loggedInUser");
     if (loggedUser) {
       const user = JSON.parse(loggedUser);
-      setUser(user);
+      dispatch(initUser(user))
       blogService.setToken(user.token);
     }
   }, []);
@@ -42,7 +44,7 @@ const App = () => {
       const user = await loginService.login({ username, password });
       window.localStorage.setItem("loggedInUser", JSON.stringify(user));
       blogService.setToken(user.token);
-      setUser(user);
+      dispatch(initUser(user))
       setUsername("");
       setPassword("");
       dispatch(defineNotification(`${user.username} logged in successfully!`, 5))
@@ -56,7 +58,7 @@ const App = () => {
   const handleLogout = (event) => {
     event.preventDefault();
     window.localStorage.clear();
-    setUser(null);
+    dispatch(initUser(null));
     dispatch(defineNotification(`${user.username} logged out successfully!`, 5));
   };
 
